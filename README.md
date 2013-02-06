@@ -48,6 +48,7 @@ Following options are available to manage your Maven build.
  * `:mvn_template_path` - specify ERB template path for settings.xml.
  * `:mvn_java_home` - optional `JAVA_HOME` settings for Maven commands.
  * `:mvn_java_home_local` - optional `JAVA_HOME` settings for Maven commands in localhost.
+ * `:mvn_relative_build_path` - optional setting for directing maven to a directory within the project where the pom.xml file resides. Default uses the root of the project.
 
 ## Contributing
 
