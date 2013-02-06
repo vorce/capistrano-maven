@@ -248,9 +248,7 @@ module Capistrano
 
           desc("Perform maven build.")
           task(:execute, :roles => :app, :except => { :no_release => true }) {
-            if exists?(:mvn_relative_build_path)
-              set :mvn_project_path, "#{mvn_project_path}/#{mvn_relative_build_path}"
-            end
+            _cset(:mvn_project_path, File.join(mvn_project_path, fetch(mvn_relative_build_path, "")))
 
             on_rollback {
               run("cd #{mvn_project_path} && #{mvn_cmd} clean")
