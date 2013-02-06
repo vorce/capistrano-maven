@@ -248,17 +248,16 @@ module Capistrano
 
           desc("Perform maven build.")
           task(:execute, :roles => :app, :except => { :no_release => true }) {
-            puts "Hello"
             puts "Proj path: #{mvn_project_path}"
             puts "Relative build path: #{mvn_relative_build_path}"
-            _cset(:mvn_project_path, File.join(mvn_project_path, fetch(mvn_relative_build_path, "")))
-            puts "Proj path after _cset: #{mvn_project_path}"
+            _cset(:mvn_full_path, File.join(mvn_project_path, fetch(mvn_relative_build_path, "")))
+            puts "Full path: #{mvn_full_path}"
 
             on_rollback {
-              run("cd #{mvn_project_path} && #{mvn_cmd} clean")
+              run("cd #{mvn_full_path} && #{mvn_cmd} clean")
             }
 
-            run("cd #{mvn_project_path} && #{mvn_cmd} #{mvn_goals.join(' ')}")
+            run("cd #{mvn_full_path} && #{mvn_cmd} #{mvn_goals.join(' ')}")
           }
 
           desc("Perform maven build locally.")
