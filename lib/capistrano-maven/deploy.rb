@@ -62,7 +62,11 @@ module Capistrano
             end
           }
           _cset(:mvn_project_path) {
-            release_path
+            if fetch(:mvn_release_path, nil)
+              release_path
+            else
+              "#{mvn_release_path}"
+            end
           }
           _cset(:mvn_project_path_local) {
             Dir.pwd
