@@ -1,5 +1,5 @@
 module Capistrano
   module Maven
-    VERSION = "0.0.6test"
+    VERSION = "0.0.6fh"
   end
 end
