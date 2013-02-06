@@ -62,11 +62,7 @@ module Capistrano
             end
           }
           _cset(:mvn_project_path) {
-            if fetch(:mvn_release_path, nil)
-              release_path
-            else
-              "#{mvn_release_path}"
-            end
+            release_path
           }
           _cset(:mvn_project_path_local) {
             Dir.pwd
@@ -252,9 +248,14 @@ module Capistrano
 
           desc("Perform maven build.")
           task(:execute, :roles => :app, :except => { :no_release => true }) {
+            if exists?(:mvn_relative_build_path)
+              set :mvn_project_path, "#{mvn_project_path}/#{mvn_relative_build_path}"
+            end
+
             on_rollback {
               run("cd #{mvn_project_path} && #{mvn_cmd} clean")
             }
+
             run("cd #{mvn_project_path} && #{mvn_cmd} #{mvn_goals.join(' ')}")
           }
 
